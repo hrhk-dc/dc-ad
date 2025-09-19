@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dailyGuaranteeIncomeEl = document.getElementById('daily-guarantee-income');
     
     const deliverySteps = [80, 120, 180];
-    const dailyGuarantee = 520000;
+    const FIXED_DAILY_GUARANTEE = 520000; // 日給保証を52万円に固定
     const PER_PIECE_PRICE = 180;
     const WORKING_DAYS = 26;
 
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const calculateIncome = (sliderIndex) => {
         const deliveries = deliverySteps[sliderIndex];
         const perPieceTotal = deliveries * PER_PIECE_PRICE * WORKING_DAYS;
-        const dailyGuaranteeTotal = FIXED_DAILY_GUARANTEE;
+        const dailyGuaranteeTotal = FIXED_DAILY_GUARANTEE; // 固定値を参照
         
         deliveryCountEl.textContent = deliveries;
         perPieceIncomeEl.textContent = formatCurrency(perPieceTotal);
@@ -111,7 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
             aiAnswerBox.innerHTML = '<div class="flex justify-center items-center"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-400"></div><p class="ml-3">AIが回答を考えています...</p></div>';
             askAiButton.disabled = true;
             
+            // APIキーを指定されたものに変更
             const apiKey = "AIzaSyBTxtMHRDr51qd4eKuItmUpbSyXnEW_C64"; 
+
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
             const systemPrompt = "あなたは株式会社DCの採用アシスタントAIです。軽貨物運送の仕事を探している人の友人として、最高の応援団長になってください！質問には、とても親しみやすく、やる気が出るように絵文字（✨🚚💪など）をたくさん使って、温かく答えてください。株式会社DCの強み（透明性のある報酬制度、風通しの良さ、独立支援など）を盛り込みながら、「君ならできる！」というポジティブな雰囲気で、200文字以内で元気に回答してください！";
             const payload = {
@@ -126,7 +128,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                if (!response.ok) throw new Error(`API error: ${response.statusText}`);
+                if (!response.ok) {
+                   const errorData = await response.json();
+                   console.error('API Error Response:', errorData);
+                   throw new Error(`API error: ${response.statusText}`);
+                }
                 const result = await response.json();
                 const candidate = result.candidates?.[0];
                 if (candidate && candidate.content?.parts?.[0]?.text) {
@@ -142,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (error) {
                 console.error("Gemini API Error:", error);
-                aiAnswerBox.textContent = '通信エラーが発生したみたいです😢 時間をおいてもう一度試してみてくださいね！';
+                aiAnswerBox.textContent = '通信エラーが発生したみたいです😢 時間をおいてもう一度試してみてくださいね！APIキーが正しく設定されているかご確認ください。';
             } finally {
                 askAiButton.disabled = false;
             }
@@ -163,9 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
     revealElements.forEach(el => observer.observe(el));
     
     window.onscroll = () => {
-        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        if (scrollTopBtn && (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300)) {
             scrollTopBtn.classList.remove('hidden', 'opacity-0', 'translate-y-4');
-        } else {
+        } else if (scrollTopBtn) {
             scrollTopBtn.classList.add('opacity-0', 'translate-y-4');
             setTimeout(() => {
                 if (document.body.scrollTop < 300 && document.documentElement.scrollTop < 300) {
@@ -178,3 +184,4 @@ document.addEventListener('DOMContentLoaded', () => {
        scrollTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 });
+

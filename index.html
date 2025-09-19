@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- 外部CSSファイルを読み込みます -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="text-gray-200">
@@ -16,18 +17,20 @@
     <a href="#" class="fixed-logo">
         <img src="dc-logo.jpg.PNG" alt="株式会社DC ロゴ">
     </a>
+
     <header class="relative text-white min-h-screen flex items-center justify-center overflow-hidden bg-[#0c0c0f]">
         <video autoplay loop muted playsinline class="absolute z-0 w-auto min-w-full min-h-full max-w-none">
-            <source src="https://videos.pexels.com/video-files/2894291/2894291-hd_1920_1080_30fps.mp4" type="video/mp4">
+            <source src="123.png" type="video/mp4">
             Your browser does not support the video tag.
         </video>
+        <img src="" class="header-bg-image" alt="City night view">
         <div class="absolute inset-0 z-10" style="background: linear-gradient(to top, rgba(12, 12, 15, 0.8) 0%, rgba(12, 12, 15, 0.2) 50%, rgba(12, 12, 15, 0.8) 100%);"></div>
         <div class="relative z-20 container mx-auto px-6 py-16 md:py-24 text-center">
             <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight reveal reveal-delay-200">「会社のコマ」で、終わるな。</h1>
             <h2 class="text-3xl md:text-5xl font-bold mt-2 reveal reveal-delay-400"><span class="aurora-text">自分の力で稼ぎ、未来を創る。</span></h2>
             <p class="mt-8 text-lg md:text-xl font-bold reveal reveal-delay-600">新しい働き方を、私たちと。</p>
             <h3 class="mt-2 text-2xl md:text-3xl font-black text-white reveal reveal-delay-600">株式会社DC 立ち上げメンバー募集！</h3>
-            <a href="#apply" class="mt-12 inline-block line-button text-white font-bold py-4 px-10 rounded-full text-lg shadow-2xl transform reveal reveal-delay-600">今すぐLINEで話を聞いてみる</a>
+            <a href="https://lin.ee/o4PUCZi" target="_blank" rel="noopener noreferrer" class="mt-12 inline-block line-button text-white font-bold py-4 px-10 rounded-full text-lg shadow-2xl transform reveal reveal-delay-600">今すぐLINEで話を聞いてみる</a>
         </div>
     </header>
 
@@ -105,8 +108,15 @@
         <section id="simulation" class="py-20 md:py-32 bg-[#0c0c0f]">
             <div class="container mx-auto px-6 max-w-4xl reveal">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 aurora-text">あなたの頑張りが、そのまま収入に。</h2>
-                <p class="text-center text-gray-400 mb-12">下のスライダーを動かして、あなたの月収をシミュレーションしてみましょう。</p>
-                <div class="themed-card p-6 md:p-8 rounded-lg shadow-inner">
+                <p class="text-center text-gray-400 mb-12">グラフ下のスライダーを動かして、あなたの月収をシミュレーションしてみましょう。</p>
+                
+                <div class="mt-12">
+                    <div class="chart-container relative w-full max-w-3xl mx-auto h-80 md:h-96">
+                        <canvas id="incomeChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="themed-card p-6 md:p-8 rounded-lg shadow-inner mt-12">
                     <label for="delivery-slider" class="block text-lg font-bold text-center text-white">1日の平均配達個数: <span id="delivery-count" class="text-cyan-400 text-3xl font-black">120</span>個</label>
                     <input id="delivery-slider" type="range" min="0" max="2" value="1" step="1" class="w-full my-6">
                     <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
@@ -117,14 +127,9 @@
                         </div>
                         <div>
                             <p class="text-sm text-gray-400">日給保証の場合</p>
-                            <p class="text-4xl font-extrabold text-white"><span id="daily-guarantee-income">520,000</span>円~</p>
+                            <p class="text-4xl font-extrabold text-white"><span id="daily-guarantee-income">520,000</span>円</p>
                             <span class="text-sm text-gray-500">（26日稼働の場合）</span>
                         </div>
-                    </div>
-                </div>
-                <div class="mt-12">
-                    <div class="chart-container relative w-full max-w-3xl mx-auto h-80 md:h-96">
-                        <canvas id="incomeChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -196,7 +201,7 @@
                 <p class="text-lg text-gray-300 mb-8 reveal reveal-delay-200">学歴不問、経験不問。必要なのは「やってみたい」という気持ちだけです。<br>私たちと一緒に、新しい会社の歴史を創っていきませんか？</p>
                 <p class="mb-10 reveal reveal-delay-400">少しでも気になったら、まずは一度、お話だけでも聞いてみてください。<br>あなたにお会いできることを、楽しみにしています。</p>
                 <div class="reveal reveal-delay-600">
-                    <a href="https://line.me/R/ti/p/YOUR_LINE_ID_HERE" target="_blank" rel="noopener noreferrer" class="inline-flex items-center line-button text-white font-bold py-5 px-12 rounded-full text-xl shadow-2xl">
+                    <a href="https://lin.ee/o4PUCZi" target="_blank" rel="noopener noreferrer" class="inline-flex items-center line-button text-white font-bold py-5 px-12 rounded-full text-xl shadow-2xl">
                         <svg class="w-8 h-8 mr-3" fill="currentColor" viewBox="0 0 48 48" aria-hidden="true"><path d="M38.88 33.36c-1.2-1.12-2.48-2.16-3.68-3.2-.8-.72-1.04-.72-1.84 0-1.28 1.12-2.56 2.24-3.84 3.36-.4.4-.88.48-1.36.16-.96-.64-2.24-1.52-3.44-2.56-2.48-2.08-4.64-4.48-6.48-7.2-.4-.64-.32-1.2.16-1.68 1.12-1.2 2.24-2.4 3.36-3.6.8-.8.72-1.12 0-1.84-1.12-1.2-2.16-2.48-3.2-3.68-.72-.8-.72-1.04 0-1.84 1.28-1.28 2.56-2.56 3.84-3.84.96-.96 1.36-1.2 2.48-.96 3.2.8 6 2.56 8.32 4.96 3.12 3.2 4.96 6.88 5.44 11.2.24 2.48-.72 4.4-2.88 5.68zM24 4C12.96 4 4 12.96 4 24s8.96 20 20 20 20-8.96 20-20S35.04 4 24 4z" /></svg>
                         <span>LINEで応募する</span>
                     </a>
@@ -212,6 +217,10 @@
     <button id="scrollTopBtn" class="hidden fixed bottom-6 right-6 bg-cyan-500 text-black w-12 h-12 rounded-full shadow-lg hover:bg-cyan-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-all duration-300 opacity-0 transform translate-y-4">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
     </button>
+    
+    <!-- 外部JavaScriptファイルを読み込みます -->
     <script src="main.js"></script>
+
 </body>
 </html>
+

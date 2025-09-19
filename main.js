@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const calculateIncome = (sliderIndex) => {
         const deliveries = deliverySteps[sliderIndex];
         const perPieceTotal = deliveries * PER_PIECE_PRICE * WORKING_DAYS;
-        const dailyGuaranteeTotal = dailyGuarantees[sliderIndex];
+        const dailyGuaranteeTotal = FIXED_DAILY_GUARANTEE;
         
         deliveryCountEl.textContent = deliveries;
         perPieceIncomeEl.textContent = formatCurrency(perPieceTotal);

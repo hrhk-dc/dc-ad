@@ -71,3 +71,21 @@ input[type=range]:active::-webkit-slider-thumb {
     transform: translateY(-5px);
 }
 
+/* ▼▼▼ ロゴを左上に固定するためのCSSを追加 ▼▼▼ */
+.fixed-logo {
+    position: fixed; /* 画面に固定 */
+    top: 2rem;       /* 画面の上から32pxの位置 */
+    left: 2rem;      /* 画面の左から32pxの位置 */
+    z-index: 1000;   /* 他の要素より手前に表示 */
+    transition: transform 0.3s ease;
+}
+
+.fixed-logo img {
+    height: 3rem; /* ロゴの高さ (48px) */
+    width: auto;
+}
+
+.fixed-logo:hover {
+    transform: scale(1.05); /* ホバー時に少し拡大 */
+}
+/* ▲▲▲ ここまで ▲▲▲ */

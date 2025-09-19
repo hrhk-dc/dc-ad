@@ -6,15 +6,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const dailyGuaranteeIncomeEl = document.getElementById('daily-guarantee-income');
     
     const deliverySteps = [80, 120, 180];
+    const dailyGuarantees = [468000, 520000, 650000];
     const PER_PIECE_PRICE = 180;
     const WORKING_DAYS = 26;
-    const DAILY_GUARANTEE = 20000;
 
     const formatCurrency = (value) => new Intl.NumberFormat('ja-JP').format(value);
 
-    const calculateIncome = (deliveries) => {
+    const calculateIncome = (sliderIndex) => {
+        const deliveries = deliverySteps[sliderIndex];
         const perPieceTotal = deliveries * PER_PIECE_PRICE * WORKING_DAYS;
-        const dailyGuaranteeTotal = DAILY_GUARANTEE * WORKING_DAYS;
+        const dailyGuaranteeTotal = dailyGuarantees[sliderIndex];
+        
         deliveryCountEl.textContent = deliveries;
         perPieceIncomeEl.textContent = formatCurrency(perPieceTotal);
         dailyGuaranteeIncomeEl.textContent = formatCurrency(dailyGuaranteeTotal);
@@ -29,77 +31,70 @@ document.addEventListener('DOMContentLoaded', () => {
         target.style.background = `linear-gradient(to right, #14f195 ${percentage}%, rgba(255, 255, 255, 0.1) ${percentage}%)`;
     };
 
-    if (slider) {
-        // --- Chart.js グラフ描画 ---
-        if (document.getElementById('incomeChart')) {
-            Chart.defaults.font.family = "'Noto Sans JP', sans-serif";
-            Chart.defaults.color = 'rgba(255, 255, 255, 0.7)';
-            const ctx = document.getElementById('incomeChart').getContext('2d');
-            const incomeChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['あなたの月収(個単価)', '日給保証'],
-                    datasets: [{
-                        label: '月間売上',
-                        data: [0, 0],
-                        backgroundColor: ['rgba(56, 189, 248, 0.6)', 'rgba(168, 85, 247, 0.6)'],
-                        borderColor: ['#38bdf8', '#a855f7'],
-                        borderWidth: 2,
-                        borderRadius: 8,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: { 
-                            beginAtZero: true, 
-                            ticks: { 
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                callback: (value) => value / 10000 + '万円' 
-                            },
-                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+    if (slider && document.getElementById('incomeChart')) {
+        Chart.defaults.font.family = "'Noto Sans JP', sans-serif";
+        Chart.defaults.color = 'rgba(255, 255, 255, 0.7)';
+        const ctx = document.getElementById('incomeChart').getContext('2d');
+        const incomeChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['あなたの月収(個単価)', '日給保証'],
+                datasets: [{
+                    label: '月間売上',
+                    data: [0, 0],
+                    backgroundColor: ['rgba(56, 189, 248, 0.6)', 'rgba(168, 85, 247, 0.6)'],
+                    borderColor: ['#38bdf8', '#a855f7'],
+                    borderWidth: 2,
+                    borderRadius: 8,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)',
+                            callback: (value) => value / 10000 + '万円'
                         },
-                        x: { 
-                            grid: { display: false },
-                            ticks: { color: 'rgba(255, 255, 255, 0.7)' }
-                        }
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
                     },
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label: (context) => `${context.dataset.label || ''}: ${new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(context.parsed.y)}`
-                            }
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: 'rgba(255, 255, 255, 0.7)' }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => `${context.dataset.label || ''}: ${new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(context.parsed.y)}`
                         }
                     }
                 }
-            });
-            
-            const updateChart = (perPieceTotal, dailyGuaranteeTotal) => {
-                incomeChart.data.datasets[0].data[0] = perPieceTotal;
-                incomeChart.data.datasets[0].data[1] = dailyGuaranteeTotal;
-                incomeChart.update();
-            };
+            }
+        });
+        
+        const updateChart = (perPieceTotal, dailyGuaranteeTotal) => {
+            incomeChart.data.datasets[0].data[0] = perPieceTotal;
+            incomeChart.data.datasets[0].data[1] = dailyGuaranteeTotal;
+            incomeChart.update();
+        };
 
-            slider.addEventListener('input', (event) => {
-                const sliderIndex = parseInt(event.target.value, 10);
-                const deliveries = deliverySteps[sliderIndex];
-                const { perPieceTotal, dailyGuaranteeTotal } = calculateIncome(deliveries);
-                updateChart(perPieceTotal, dailyGuaranteeTotal);
-                updateSliderStyle(event.target);
-            });
-
-            // 初期表示時の計算と描画
-            const initialSliderIndex = parseInt(slider.value, 10);
-            const initialDeliveries = deliverySteps[initialSliderIndex];
-            const { perPieceTotal, dailyGuaranteeTotal } = calculateIncome(initialDeliveries);
+        slider.addEventListener('input', (event) => {
+            const sliderIndex = parseInt(event.target.value, 10);
+            const { perPieceTotal, dailyGuaranteeTotal } = calculateIncome(sliderIndex);
             updateChart(perPieceTotal, dailyGuaranteeTotal);
-            updateSliderStyle(slider);
-        }
+            updateSliderStyle(event.target);
+        });
+
+        const initialSliderIndex = parseInt(slider.value, 10);
+        const { perPieceTotal, dailyGuaranteeTotal } = calculateIncome(initialSliderIndex);
+        updateChart(perPieceTotal, dailyGuaranteeTotal);
+        updateSliderStyle(slider);
     }
     
-    // --- Gemini AI 面接官機能 ---
     const askAiButton = document.getElementById('ask-ai-button');
     const aiQuestionEl = document.getElementById('ai-question');
     const aiAnswerBox = document.getElementById('ai-answer-box');
@@ -154,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- トップへ戻るボタン & スクロールアニメーション ---
     const scrollTopBtn = document.getElementById('scrollTopBtn');
     const revealElements = document.querySelectorAll('.reveal');
 
@@ -180,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 300);
         }
     };
-    scrollTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+    if(scrollTopBtn) {
+       scrollTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 });
-

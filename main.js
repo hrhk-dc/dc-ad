@@ -111,7 +111,21 @@ document.addEventListener('DOMContentLoaded', () => {
             aiAnswerBox.innerHTML = '<div class="flex justify-center items-center"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-400"></div><p class="ml-3">AIが回答を考えています...</p></div>';
             askAiButton.disabled = true;
             
-            const apiKey = ""; 
+            const apiKey = "curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent" \
+  -H 'Content-Type: application/json' \
+  -H 'X-goog-api-key: GEMINI_API_KEY' \
+  -X POST \
+  -d '{
+    "contents": [
+      {
+        "parts": [
+          {
+            "text": "Explain how AI works in a few words"
+          }
+        ]
+      }
+    ]
+  }'"; 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
             const systemPrompt = "あなたは株式会社DCの採用アシスタントAIです。軽貨物運送の仕事を探している人の友人として、最高の応援団長になってください！質問には、とても親しみやすく、やる気が出るように絵文字（✨🚚💪など）をたくさん使って、温かく答えてください。株式会社DCの強み（透明性のある報酬制度、風通しの良さ、独立支援など）を盛り込みながら、「君ならできる！」というポジティブな雰囲気で、200文字以内で元気に回答してください！";
             const payload = {

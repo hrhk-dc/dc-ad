@@ -1,0 +1,73 @@
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #0c0c0f;
+}
+
+.line-button {
+    background-color: #06C755;
+    transition: all 0.3s ease;
+}
+.line-button:hover {
+    background-color: #05a544;
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 10px 20px rgba(6, 199, 85, 0.25);
+}
+
+input[type=range] {
+    -webkit-appearance: none; appearance: none;
+    background: transparent; cursor: pointer; width: 100%;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    background: rgba(255, 255, 255, 0.1); height: 0.5rem; border-radius: 9999px;
+}
+input[type=range]::-moz-range-track {
+    background: rgba(255, 255, 255, 0.1); height: 0.5rem; border-radius: 9999px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    margin-top: -10px;
+    width: 36px; height: 36px;
+    background: #fff; border-radius: 50%;
+    border: 6px solid #14f195;
+    box-shadow: 0 0 20px #14f195;
+    transition: all 0.2s ease;
+}
+input[type=range]:active::-webkit-slider-thumb {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px #14f195;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 1s cubic-bezier(0.5, 0, 0, 1), transform 1s cubic-bezier(0.5, 0, 0, 1);
+}
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+.reveal-delay-200 { transition-delay: 200ms; }
+.reveal-delay-400 { transition-delay: 400ms; }
+.reveal-delay-600 { transition-delay: 600ms; }
+
+.aurora-text {
+    background: linear-gradient(90deg, #38bdf8, #a78bfa, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+.themed-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+.themed-card:hover {
+    border-color: rgba(20, 241, 149, 0.5);
+    transform: translateY(-5px);
+}
+

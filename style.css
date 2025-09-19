@@ -82,8 +82,9 @@ input[type=range]:active::-webkit-slider-thumb {
     transition: transform 0.3s ease;
 }
 .fixed-logo img {
-    height: 3.5rem; /* ロゴの高さを調整 */
+    height: 4rem; /* ロゴの高さを調整 */
     width: auto;
+    border-radius: 8px;
 }
 .fixed-logo:hover {
     transform: scale(1.05);

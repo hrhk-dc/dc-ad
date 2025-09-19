@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dailyGuaranteeIncomeEl = document.getElementById('daily-guarantee-income');
     
     const deliverySteps = [80, 120, 180];
-    const dailyGuarantees = [468000, 520000, 650000];
+    const dailyGuarantee = 520000;
     const PER_PIECE_PRICE = 180;
     const WORKING_DAYS = 26;
 

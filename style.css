@@ -82,7 +82,7 @@ input[type=range]:active::-webkit-slider-thumb {
     transition: transform 0.3s ease;
 }
 .fixed-logo img {
-    height: 3.5rem; 
+    height: 4rem; 
     width: auto;
     border-radius: 8px; 
 }
